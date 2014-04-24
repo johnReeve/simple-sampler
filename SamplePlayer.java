@@ -26,9 +26,7 @@ public class SamplePlayer  {
         
         final SamplePlayer samplePlayer = new SamplePlayer();
 
-        /* Use an appropriate Look and Feel */
         try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (UnsupportedLookAndFeelException ex) {
             ex.printStackTrace();
@@ -85,12 +83,4 @@ public class SamplePlayer  {
         });
         return button;
     }
-
-    // public class PlaySample implements ActionListener {
-    //     public void actionPerformed(ActionEvent e) {
-    //         String cmd = e.getActionCommand();         
-    //         System.out.println("You clicked " + cmd);
-    //         samp.playSample();
-    //     }
-    // }
 }
