@@ -21,7 +21,7 @@ public class AudioSample {
 
     private static final int    EXTERNAL_BUFFER_SIZE = 128000;
 
-    private static String strFilename = "./data/tie.wav";
+    private String strFilename;
     private String sampleTitle = "Tie Fighter";
 
     private File                soundFile;
@@ -32,9 +32,10 @@ public class AudioSample {
 
     private Clip                clip;
 
-    public AudioSample(){
-        System.out.printf("InitSample: %s\n", strFilename);
-        soundFile = new File(strFilename);
+    public AudioSample(String filename){
+        System.out.printf("InitSample: %s\n", filename);
+        strFilename = filename;
+        soundFile   = new File(filename);
 
         try {
             audioInputStream = AudioSystem.getAudioInputStream(soundFile);
@@ -133,6 +134,14 @@ public class AudioSample {
         // line.close();
     }    
 
+    public void setSampleTitle (String title) {
+        sampleTitle = title;
+    }
+
+    public String getSampleTitle () {
+        return sampleTitle;
+    }
+
     /** plays the sample */
     public void playSample () {
         if( clip.isRunning() ) {
@@ -140,6 +149,6 @@ public class AudioSample {
         }
         clip.setFramePosition( 0 );
         clip.start();
-        System.out.printf("Playing sample: %s\n", strFilename);
+        System.out.printf("Playing sample: %s (%s)\n", sampleTitle, strFilename);
     }
 }

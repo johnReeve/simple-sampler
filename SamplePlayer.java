@@ -12,13 +12,16 @@ import java.awt.event.*;
 import vars.AppVars;
 import vars.AppStrings;
 import audio.AudioSample;
+import audio.AudioSampler;
 
 public class SamplePlayer  {
 
-    private AudioSample samp;
+    private AudioSampler samples;
 
     public SamplePlayer () {
-        samp = new AudioSample();        
+
+        samples = new AudioSampler();
+
     }
 
     public static void main (String[] args) {
@@ -50,6 +53,7 @@ public class SamplePlayer  {
         JFrame frame = new JFrame(AppStrings.APPLICATION_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        addMenuBarToFrame(frame);
         addComponentsToPane(frame.getContentPane());
         
         frame.setResizable(false);
@@ -59,26 +63,50 @@ public class SamplePlayer  {
         frame.setVisible(true);
     }
 
+    // system menu bar:
+    private void addMenuBarToFrame(JFrame frame) {
+
+        System.setProperty("apple.laf.useScreenMenuBar", "true");
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu file = new JMenu("File");
+        JMenuItem item = new JMenuItem("Edit Sample or die");
+        
+        file.add(item);
+        menuBar.add(file);
+        frame.setJMenuBar(menuBar);
+    }
+
     private void addComponentsToPane(Container pane) {
 
+        // sampler play button layout:
         pane.setLayout(new GridLayout(0, 4, 10, 10));
 
         JPanel sampleButtons = new JPanel();
-        for (int i=0; i < AppVars.NUMBERS_OF_SAMPLES; i++ ){
-            pane.add(addPlayButton( Integer.toString(i + 1), "play_" + Integer.toString(i)));
+        for (int i=0; i < samples.numberOfSamples(); i++ ){
+            pane.add(addPlayButton( Integer.toString(i), samples.getSampleName(i), Integer.toString(i) ));
         }
         
     }
 
-    private JButton addPlayButton(String text, String command) {
-        JButton button = new JButton(text);
+    private JButton addPlayButton(String buttonTitle, String sampname, String command) {
+        JButton button = new JButton();
+
+        button.setLayout(new BorderLayout());
+
+        JLabel buttonName = new JLabel( buttonTitle  );
+        JLabel sampleName = new JLabel( sampname );
+
+        button.add(BorderLayout.NORTH, buttonName );
+        button.add(BorderLayout.SOUTH, sampleName);
+
         button.setPreferredSize(new Dimension(100, 100));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setActionCommand(command);
         button.addActionListener(new ActionListener() {     
             public void actionPerformed(ActionEvent e) {
                 String cmd = e.getActionCommand();
-                samp.playSample();
+                samples.playSample(Integer.parseInt(cmd));
             }
         });
         return button;
