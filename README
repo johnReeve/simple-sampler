@@ -4,4 +4,4 @@ This is a simple audio playback device that I am writing to teach myself Java.
 
 It is super not functional at the moment, but basically you can hard-code a bunch of samples and play them back.
 
-Next step is to write something that allows it to select sample files and set names!  I'm thinking big here, people :D
+Next step is to write something that allows it to select sample files and set names!
